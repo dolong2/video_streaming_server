@@ -1,5 +1,6 @@
 package com.video.server.domain.member;
 
+import com.video.server.domain.video.Video;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +32,9 @@ public class Member{
     @CollectionTable(name = "Role", joinColumns = @JoinColumn(name = "id"))
     @Builder.Default
     private List<Role> roles = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "owner")
+    List<Video> videos;
 
     public void updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
