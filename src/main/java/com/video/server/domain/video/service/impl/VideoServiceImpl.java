@@ -5,6 +5,7 @@ import com.video.server.domain.video.repository.VideoRepository;
 import com.video.server.domain.video.service.VideoService;
 import com.video.server.global.util.CurrentMemberUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class VideoServiceImpl implements VideoService {
 
+    @Value("${file.upload.location}")
     private String defaultDir;
     private final VideoRepository videoRepository;
     private final CurrentMemberUtil currentMemberUtil;
