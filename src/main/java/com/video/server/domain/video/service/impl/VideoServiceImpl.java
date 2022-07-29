@@ -7,6 +7,7 @@ import com.video.server.global.util.CurrentMemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
+    @Transactional
     public void upload(MultipartFile multipartFile, String title) {
         if(multipartFile.isEmpty()){
             throw new RuntimeException();
