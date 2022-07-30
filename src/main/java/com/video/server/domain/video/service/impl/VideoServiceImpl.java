@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +42,12 @@ public class VideoServiceImpl implements VideoService {
                 .url(fullPath)
                 .build();
         videoRepository.save(video);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Video> getAllVideo() {
+        return videoRepository.findAll();
     }
 
 }

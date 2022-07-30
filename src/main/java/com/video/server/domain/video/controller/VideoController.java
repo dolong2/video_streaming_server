@@ -1,14 +1,13 @@
 package com.video.server.domain.video.controller;
 
+import com.video.server.domain.video.Video;
 import com.video.server.domain.video.service.VideoService;
 import com.video.server.global.util.response.ResponseService;
 import com.video.server.global.util.response.result.CommonResultResponse;
+import com.video.server.global.util.response.result.ListResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -23,6 +22,11 @@ public class VideoController {
     public ResponseEntity<CommonResultResponse> uploadVideo(@RequestParam String title, @RequestParam MultipartFile video){
         videoService.upload(video, title);
         return responseService.getSuccessResult();
+    }
+
+    @GetMapping()
+    public ResponseEntity<ListResultResponse<Video>> getAllVideo(){
+        return responseService.getListResult(videoService.getAllVideo());
     }
 
 }
