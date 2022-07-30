@@ -11,4 +11,6 @@ public interface MemberService {
     Long join(SignUpMemberDto memberDto);
     Map<String, String> login(SignInMemberDto memberDto);
     void logout();
+
+    Map<String,String> refresh(String refreshToken);
 }

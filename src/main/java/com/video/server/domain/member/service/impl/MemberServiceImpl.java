@@ -10,6 +10,7 @@ import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.DuplicateMemberException;
 import com.video.server.global.exception.error.MemberNotFindException;
 import com.video.server.global.exception.error.PasswordNotCorrectException;
+import com.video.server.global.exception.error.TokenExpiredException;
 import com.video.server.global.util.CurrentMemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -64,5 +65,18 @@ public class MemberServiceImpl implements MemberService {
     public void logout() {
         Member member = currentMemberUtil.getCurrentMember();
         member.updateRefreshToken(null);
+    }
+
+    @Override
+    @Transactional
+    public Map<String, String> refresh(String refreshToken){
+        if(tokenProvider.isTokenExpired(refreshToken)){
+            throw new TokenExpiredException("토큰이 만료되었습니다", ErrorCode.TOKEN_EXPIRED);
+        }
+        String email = tokenProvider.getUserEmail(refreshToken);
+        String accessToken = tokenProvider.generateAccessToken(email);
+        Map<String, String> result = new HashMap<>();
+        result.put("accessToken", accessToken);
+        return result;
     }
 }
