@@ -8,12 +8,17 @@ import com.video.server.global.util.CurrentMemberUtil;
 import com.video.server.global.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.ResourceRegion;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Service
@@ -64,4 +69,27 @@ public class VideoServiceImpl implements VideoService {
         return videoResDto;
     }
 
+    @Override
+    public ResourceRegion streaming(Long videoId, HttpHeaders headers) throws IOException {
+        String videoUrl = videoRepository.findById(videoId)
+                .orElseThrow(() -> new RuntimeException()).getUrl();
+        UrlResource video = new UrlResource("classpath:" + videoUrl);
+        ResourceRegion region = resourceRegion(video, headers);
+        return region;
+    }
+
+    private ResourceRegion resourceRegion(UrlResource video, HttpHeaders headers) throws IOException{
+        final Long chunkSize = 1000000L;
+        Long contentLength = video.contentLength();
+        HttpRange httpRange = headers.getRange().stream().findFirst().get();
+        if(httpRange!=null){
+            Long start = httpRange.getRangeStart(contentLength);
+            Long end = httpRange.getRangeEnd(contentLength);
+            Long rangeLength = Long.min(chunkSize, end - start + 1);
+            return new ResourceRegion(video, start, rangeLength);
+        }else {
+            long rangeLength = Long.min(chunkSize, contentLength);
+            return new ResourceRegion(video, 0, rangeLength);
+        }
+    }
 }
