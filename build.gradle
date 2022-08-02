@@ -36,6 +36,8 @@ dependencies {
 
 	//model mapper
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
