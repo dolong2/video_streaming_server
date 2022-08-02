@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 @Service
@@ -27,6 +26,10 @@ public class VideoServiceImpl implements VideoService {
 
     @Value("${file.upload.location}")
     private String defaultDir;
+
+    @Value("${file.stream.location}")
+    private String streamLocation;
+
     private final VideoRepository videoRepository;
     private final CurrentMemberUtil currentMemberUtil;
 
@@ -73,7 +76,9 @@ public class VideoServiceImpl implements VideoService {
     public ResourceRegion streaming(Long videoId, HttpHeaders headers) throws IOException {
         String videoUrl = videoRepository.findById(videoId)
                 .orElseThrow(() -> new RuntimeException()).getUrl();
-        UrlResource video = new UrlResource("classpath:" + videoUrl);
+        videoUrl=videoUrl.substring(80);
+        UrlResource video = new UrlResource("classpath:" + streamLocation + "/" + videoUrl);
+        System.out.println("video = " + video);
         ResourceRegion region = resourceRegion(video, headers);
         return region;
     }
