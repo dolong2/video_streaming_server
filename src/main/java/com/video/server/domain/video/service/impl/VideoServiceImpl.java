@@ -78,7 +78,6 @@ public class VideoServiceImpl implements VideoService {
                 .orElseThrow(() -> new RuntimeException()).getUrl();
         videoUrl=videoUrl.substring(80);
         UrlResource video = new UrlResource("classpath:" + streamLocation + "/" + videoUrl);
-        System.out.println("video = " + video);
         ResourceRegion region = resourceRegion(video, headers);
         return region;
     }
