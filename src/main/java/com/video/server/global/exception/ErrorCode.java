@@ -12,6 +12,8 @@ public enum ErrorCode {
     DUPLICATE_MEMBER(false, "중복되는 이메일을 가지는 회원이 있습니다.", 400),
     TOKEN_EXPIRED(false, "토큰이 만료됐습니다.", 401),
     TOKEN_NOT_VALID(false, "토큰이 유효하지 않습니다.", 401),
+    FILE_EMPTY(false, "파일이 비어있습니다", 400),
+    FILE_NOT_FIND(false, "파일을 찾을수 없습니다", 404),
     ;
     private boolean success;
     private String msg;

@@ -4,6 +4,8 @@ import com.video.server.domain.video.Video;
 import com.video.server.domain.video.dto.response.VideoResDto;
 import com.video.server.domain.video.repository.VideoRepository;
 import com.video.server.domain.video.service.VideoService;
+import com.video.server.global.exception.ErrorCode;
+import com.video.server.global.exception.error.FileNotFindException;
 import com.video.server.global.util.CurrentMemberUtil;
 import com.video.server.global.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +40,14 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void upload(MultipartFile multipartFile, String title) {
         if(multipartFile.isEmpty()){
-            throw new RuntimeException();
+            throw new FileNotFindException("File is empty", ErrorCode.FILE_NOT_FIND);
         }
         String fullPath = defaultDir + multipartFile.getOriginalFilename();
         fullPath=fullPath.replace(" ", "_");
         try{
             multipartFile.transferTo(new File(fullPath));
         }catch(IOException e){
-            throw new RuntimeException();
+            throw new RuntimeException("몰?루");
         }
         Video video = Video.builder()
                 .owner(currentMemberUtil.getCurrentMember())
@@ -67,7 +69,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional(readOnly = true)
     public VideoResDto getOneVideo(Long videoId){
         Video video = videoRepository.findById(videoId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new FileNotFindException("file can not find", ErrorCode.FILE_NOT_FIND));
         VideoResDto videoResDto = ResponseDtoUtil.mapping(video, VideoResDto.class);
         return videoResDto;
     }
@@ -75,7 +77,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public ResourceRegion streaming(Long videoId, HttpHeaders headers) throws IOException {
         String videoUrl = videoRepository.findById(videoId)
-                .orElseThrow(() -> new RuntimeException()).getUrl();
+                .orElseThrow(() -> new FileNotFindException("file can not find", ErrorCode.FILE_NOT_FIND)).getUrl();
         videoUrl=videoUrl.substring(80);
         UrlResource video = new UrlResource("classpath:" + streamLocation + "/" + videoUrl);
         ResourceRegion region = resourceRegion(video, headers);

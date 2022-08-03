@@ -50,6 +50,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
     }
 
+    @ExceptionHandler(FileEmptyException.class)
+    public ResponseEntity<ErrorResponse> FileEmptyExceptionHandler(HttpServletRequest request, FileEmptyException ex){
+        printError(request, ex, ex.getErrorCode().getMsg());
+        ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode().isSuccess(), ex.getErrorCode().getMsg(), ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(FileNotFindException.class)
+    public ResponseEntity<ErrorResponse> FileNotFindExceptionHandler(HttpServletRequest request, FileNotFindException ex){
+        printError(request, ex, ex.getErrorCode().getMsg());
+        ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode().isSuccess(), ex.getErrorCode().getMsg(), ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    }
+
     private void printError(HttpServletRequest request, RuntimeException ex, String message) {
         log.error(request.getRequestURI());
         log.error(message);
