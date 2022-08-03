@@ -5,6 +5,7 @@ import com.video.server.domain.member.Member;
 import lombok.*;
 
 @Builder
+@Getter
 @Setter
 @AllArgsConstructor @NoArgsConstructor
 public class VideoResDto {
