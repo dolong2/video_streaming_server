@@ -1,5 +1,6 @@
 package com.video.server.domain.video;
 
+import com.video.server.domain.comment.Comment;
 import com.video.server.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,4 +22,7 @@ public class Video {
     @ManyToOne
     @JoinColumn(name = "owner")
     private Member owner;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "member")
+    private List<Comment> comments;
 }
