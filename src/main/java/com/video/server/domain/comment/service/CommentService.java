@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CommentService {
 
-    Long write(CommentReqDto commentReqDto);
+    Long write(Long videoId, CommentReqDto commentReqDto);
 
     void delete(Long CommentIdx);
 
