@@ -15,6 +15,7 @@ public enum ErrorCode {
     FILE_EMPTY(false, "파일이 비어있습니다", 400),
     FILE_NOT_FIND(false, "파일을 찾을수 없습니다", 404),
     COMMENT_NOT_FIND(false, "댓글을 찾을수 없습니다", 404),
+    MEMBER_NOT_EQUAL(false, "유저가 일치하지 않습니다", 403),
     ;
     private boolean success;
     private String msg;
