@@ -23,6 +23,6 @@ public class Video {
     @JoinColumn(name = "owner")
     private Member owner;
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "member")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "video")
     private List<Comment> comments;
 }

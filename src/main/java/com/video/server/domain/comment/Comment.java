@@ -1,5 +1,7 @@
 package com.video.server.domain.comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.video.server.domain.member.Member;
 import com.video.server.domain.video.Video;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class Comment {
     @JoinColumn(name = "member")
     private Member member;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "video")
     private Video video;
