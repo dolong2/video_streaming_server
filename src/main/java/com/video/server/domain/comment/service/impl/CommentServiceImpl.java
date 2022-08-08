@@ -8,6 +8,7 @@ import com.video.server.domain.member.Member;
 import com.video.server.domain.video.Video;
 import com.video.server.domain.video.repository.VideoRepository;
 import com.video.server.global.exception.ErrorCode;
+import com.video.server.global.exception.error.CommentNotFindException;
 import com.video.server.global.exception.error.FileNotFindException;
 import com.video.server.global.util.CurrentMemberUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Long commentIdx) {
         Member member = currentMemberUtil.getCurrentMember();
         Comment comment = commentRepository.findById(commentIdx)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new CommentNotFindException("댓글을 찾을수 없습니다.", ErrorCode.COMMENT_NOT_FIND));
         if(comment.getMember() != member){
             throw new RuntimeException();
         }
