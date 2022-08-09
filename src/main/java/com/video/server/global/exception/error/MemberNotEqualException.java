@@ -4,13 +4,10 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class MemberNotEqualException extends RuntimeException{
+public class MemberNotEqualException extends BasicException{
 
-    private ErrorCode errorCode;
-
-    public MemberNotEqualException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode = errorCode;
+    public MemberNotEqualException(){
+        super(ErrorCode.MEMBER_NOT_EQUAL);
     }
 
 }

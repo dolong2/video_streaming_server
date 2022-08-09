@@ -4,12 +4,9 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class CommentNotFindException extends RuntimeException{
+public class CommentNotFindException extends BasicException{
 
-    private ErrorCode errorCode;
-
-    public CommentNotFindException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode = errorCode;
+    public CommentNotFindException(){
+        super(ErrorCode.COMMENT_NOT_FIND);
     }
 }

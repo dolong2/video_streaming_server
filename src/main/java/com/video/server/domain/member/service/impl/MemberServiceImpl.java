@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public Long join(SignUpMemberDto memberDto) {
         if(memberRepository.existsByEmail(memberDto.getEmail())){
-            throw new DuplicateMemberException("중복되는 회원 가입", ErrorCode.DUPLICATE_MEMBER);
+            throw new DuplicateMemberException();
         }
         String password = passwordEncoder.encode(memberDto.getPassword());
         Member member = memberDto.toEntity(password);
@@ -44,12 +44,12 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public Map<String, String> login(SignInMemberDto memberDto) {
         if(!memberRepository.existsByEmail(memberDto.getEmail())){
-            throw new MemberNotFindException("회원을 찾을 수 없음", ErrorCode.MEMBER_NOT_FIND);
+            throw new MemberNotFindException();
         }
         Member member = memberRepository.findOneByEmail(memberDto.getEmail())
-                .orElseThrow(()-> new MemberNotFindException("회원을 찾을 수 없음", ErrorCode.MEMBER_NOT_FIND));
+                .orElseThrow(()-> new MemberNotFindException());
         if(!passwordEncoder.matches(memberDto.getPassword(), member.getPassword())){
-            throw new PasswordNotCorrectException("비밀번호가 일치하지 않음", ErrorCode.PASSWORD_NOT_CORRECT);
+            throw new PasswordNotCorrectException();
         }
         String accessToken = tokenProvider.generateAccessToken(memberDto.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(memberDto.getEmail());
@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public Map<String, String> refresh(String refreshToken){
         if(tokenProvider.isTokenExpired(refreshToken)){
-            throw new TokenExpiredException("토큰이 만료되었습니다", ErrorCode.TOKEN_EXPIRED);
+            throw new TokenExpiredException();
         }
         String email = tokenProvider.getUserEmail(refreshToken);
         String accessToken = tokenProvider.generateAccessToken(email);

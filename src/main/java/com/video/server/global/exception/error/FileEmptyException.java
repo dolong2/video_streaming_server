@@ -4,11 +4,9 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class FileEmptyException extends RuntimeException{
-    private ErrorCode errorCode;
+public class FileEmptyException extends BasicException {
 
-    public FileEmptyException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode = errorCode;
+    public FileEmptyException(){
+        super(ErrorCode.FILE_EMPTY);
     }
 }

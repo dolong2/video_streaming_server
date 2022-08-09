@@ -40,7 +40,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void upload(MultipartFile multipartFile, String title) {
         if(multipartFile.isEmpty()){
-            throw new FileNotFindException("File is empty", ErrorCode.FILE_NOT_FIND);
+            throw new FileNotFindException();
         }
         String fullPath = defaultDir + multipartFile.getOriginalFilename();
         fullPath=fullPath.replace(" ", "_");
@@ -69,7 +69,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional(readOnly = true)
     public VideoResDto getOneVideo(Long videoId){
         Video video = videoRepository.findById(videoId)
-                .orElseThrow(() -> new FileNotFindException("file can not find", ErrorCode.FILE_NOT_FIND));
+                .orElseThrow(() -> new FileNotFindException());
         VideoResDto videoResDto = ResponseDtoUtil.mapping(video, VideoResDto.class);
         return videoResDto;
     }
@@ -77,7 +77,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public ResourceRegion streaming(Long videoId, HttpHeaders headers) throws IOException {
         String videoUrl = videoRepository.findById(videoId)
-                .orElseThrow(() -> new FileNotFindException("file can not find", ErrorCode.FILE_NOT_FIND)).getUrl();
+                .orElseThrow(() -> new FileNotFindException()).getUrl();
         videoUrl=videoUrl.substring(80);
         UrlResource video = new UrlResource("classpath:" + streamLocation + "/" + videoUrl);
         ResourceRegion region = resourceRegion(video, headers);

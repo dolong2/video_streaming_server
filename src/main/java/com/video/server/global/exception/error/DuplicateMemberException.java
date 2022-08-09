@@ -5,12 +5,9 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class DuplicateMemberException extends RuntimeException{
+public class DuplicateMemberException extends BasicException{
 
-    private ErrorCode errorCode;
-
-    public DuplicateMemberException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode = errorCode;
+    public DuplicateMemberException(){
+        super(ErrorCode.DUPLICATE_MEMBER);
     }
 }

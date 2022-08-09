@@ -4,11 +4,9 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class TokenNotValidException extends RuntimeException {
-    private ErrorCode errorCode;
+public class TokenNotValidException extends BasicException {
 
-    public TokenNotValidException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode=errorCode;
+    public TokenNotValidException(){
+        super(ErrorCode.TOKEN_NOT_VALID);
     }
 }

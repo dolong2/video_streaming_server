@@ -4,11 +4,9 @@ import com.video.server.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class MemberNotFindException extends RuntimeException{
-    private ErrorCode errorCode;
+public class MemberNotFindException extends BasicException{
 
-    public MemberNotFindException(String msg, ErrorCode errorCode){
-        super(msg);
-        this.errorCode=errorCode;
+    public MemberNotFindException(){
+        super(ErrorCode.MEMBER_NOT_FIND);
     }
 }

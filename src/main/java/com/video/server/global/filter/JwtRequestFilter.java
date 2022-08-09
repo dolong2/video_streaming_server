@@ -2,7 +2,6 @@ package com.video.server.global.filter;
 
 import com.video.server.global.config.security.auth.MyUserDetailService;
 import com.video.server.global.config.security.jwt.TokenProvider;
-import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.TokenExpiredException;
 import com.video.server.global.exception.error.TokenNotValidException;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +32,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String accessToken = request.getHeader("Authorization");
         if(accessToken != null){
             if(tokenProvider.isTokenExpired(accessToken)){
-                throw new TokenExpiredException("AccessToken is expired", ErrorCode.TOKEN_EXPIRED);
+                throw new TokenExpiredException();
             }
             else if(!tokenProvider.getTokenType(accessToken).equals("accessToken")){
-                throw new TokenNotValidException("Token is not valid", ErrorCode.TOKEN_NOT_VALID);
+                throw new TokenNotValidException();
             }
             String email = tokenProvider.getUserEmail(accessToken);
             registerSecurityContext(request, email);

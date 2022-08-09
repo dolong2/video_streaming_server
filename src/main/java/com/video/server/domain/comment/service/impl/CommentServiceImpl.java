@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
     public Long write(Long videoId, CommentReqDto commentReqDto) {
         Member member = currentMemberUtil.getCurrentMember();
         Video video = videoRepository.findById(videoId)
-                .orElseThrow(() -> new FileNotFindException("비디오를 찾을수 없습니다", ErrorCode.FILE_NOT_FIND));
+                .orElseThrow(() -> new FileNotFindException());
         Comment comment = commentReqDto.toEntity(video, member);
         video.getComments().add(comment);
         return commentRepository.save(comment).getId();
@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Long commentIdx) {
         Member member = currentMemberUtil.getCurrentMember();
         Comment comment = commentRepository.findById(commentIdx)
-                .orElseThrow(() -> new CommentNotFindException("댓글을 찾을수 없습니다.", ErrorCode.COMMENT_NOT_FIND));
+                .orElseThrow(() -> new CommentNotFindException());
         if(comment.getMember() != member){
             throw new RuntimeException();
         }
