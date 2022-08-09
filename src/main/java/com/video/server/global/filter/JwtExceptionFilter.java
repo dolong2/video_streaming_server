@@ -3,6 +3,7 @@ package com.video.server.global.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.video.server.global.exception.ErrorCode;
+import com.video.server.global.exception.error.BasicException;
 import com.video.server.global.exception.error.TokenExpiredException;
 import com.video.server.global.exception.error.TokenNotValidException;
 import lombok.RequiredArgsConstructor;
@@ -35,25 +36,25 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         }
     }
 
-    private void writeLog(HttpServletRequest request, HttpServletResponse response, RuntimeException e, ErrorCode errorCode) throws IOException {
+    private void writeLog(HttpServletRequest request, HttpServletResponse response, BasicException e, ErrorCode errorCode) throws IOException {
         log.error(request.getRequestURI());
         log.error(errorCode.getMsg());
         e.printStackTrace();
-        writeBody(response, errorCode, e);
+        writeBody(response, e);
     }
 
-    private void writeBody(HttpServletResponse response, ErrorCode errorCode, RuntimeException e) throws IOException {
-        String json = getJson(errorCode, e);
-        response.setStatus(errorCode.getStatus());
+    private void writeBody(HttpServletResponse response, BasicException e) throws IOException {
+        String json = getJson(e);
+        response.setStatus(e.getErrorCode().getStatus());
         response.setContentType("Application/json");
         response.getWriter().write(json);
     }
 
-    private String getJson(ErrorCode errorCode, RuntimeException e) throws JsonProcessingException {
+    private String getJson(BasicException e) throws JsonProcessingException {
         Map<String, Object> map = new HashMap<>();
-        map.put("success", errorCode.isSuccess());
-        map.put("msg", e.getMessage());
-        map.put("status", errorCode.getStatus());
+        map.put("success", e.getErrorCode().isSuccess());
+        map.put("msg", e.getErrorCode().getMsg());
+        map.put("status", e.getErrorCode().getStatus());
         String json = objectMapper.writeValueAsString(map);
         return json;
     }
