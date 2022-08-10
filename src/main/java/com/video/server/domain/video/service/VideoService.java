@@ -19,4 +19,6 @@ public interface VideoService {
     VideoResDto getOneVideo(Long videoId);
 
     ResourceRegion streaming(Long videoId, HttpHeaders headers) throws IOException;
+
+    void deleteVideo(Long videoIdx);
 }

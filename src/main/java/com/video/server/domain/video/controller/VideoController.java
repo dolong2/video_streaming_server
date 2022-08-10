@@ -47,4 +47,10 @@ public class VideoController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(region);
     }
+
+    @DeleteMapping("/{videoIdx}")
+    public ResponseEntity<CommonResultResponse> delete(@PathVariable Long videoIdx){
+        videoService.deleteVideo(videoIdx);
+        return responseService.getSuccessResult();
+    }
 }

@@ -6,6 +6,7 @@ import com.video.server.domain.video.repository.VideoRepository;
 import com.video.server.domain.video.service.VideoService;
 import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.FileNotFindException;
+import com.video.server.global.exception.error.MemberNotEqualException;
 import com.video.server.global.util.CurrentMemberUtil;
 import com.video.server.global.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +83,17 @@ public class VideoServiceImpl implements VideoService {
         UrlResource video = new UrlResource("classpath:" + streamLocation + "/" + videoUrl);
         ResourceRegion region = resourceRegion(video, headers);
         return region;
+    }
+
+    @Override
+    @Transactional
+    public void deleteVideo(Long videoIdx) {
+        Video video = videoRepository.findById(videoIdx)
+                .orElseThrow(() -> new FileNotFindException());
+        if(currentMemberUtil.getCurrentMember() == video.getOwner()){
+            throw new MemberNotEqualException();
+        }
+        videoRepository.delete(video);
     }
 
     private ResourceRegion resourceRegion(UrlResource video, HttpHeaders headers) throws IOException{
