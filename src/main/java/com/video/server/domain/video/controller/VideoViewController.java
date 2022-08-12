@@ -21,6 +21,7 @@ public class VideoViewController {
         VideoResDto video = videoService.getOneVideo(videoId);
         model.addAttribute("video", video);
         model.addAttribute("videoId", videoId);
+        model.addAttribute("comments", video.getComments());
         return "video";
     }
 
