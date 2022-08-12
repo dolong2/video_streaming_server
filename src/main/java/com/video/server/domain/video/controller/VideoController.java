@@ -7,7 +7,6 @@ import com.video.server.global.util.response.result.CommonResultResponse;
 import com.video.server.global.util.response.result.ListResultResponse;
 import com.video.server.global.util.response.result.SingleResultResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
