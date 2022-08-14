@@ -5,6 +5,7 @@
 ---
 ### video.html
 /video/{videoId}로 접속시 영상 재생됨
+댓글(유저 ID와 유저 이름도 포함)과 유저 이름도 출력
 ```html
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
