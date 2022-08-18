@@ -4,7 +4,6 @@ import com.video.server.domain.video.Video;
 import com.video.server.domain.video.dto.response.VideoResDto;
 import com.video.server.domain.video.repository.VideoRepository;
 import com.video.server.domain.video.service.VideoService;
-import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.FileNotFindException;
 import com.video.server.global.exception.error.MemberNotEqualException;
 import com.video.server.global.util.CurrentMemberUtil;
@@ -106,7 +105,7 @@ public class VideoServiceImpl implements VideoService {
             Long rangeLength = Long.min(chunkSize, end - start + 1);
             return new ResourceRegion(video, start, rangeLength);
         }else {
-            long rangeLength = Long.min(chunkSize, contentLength);
+            Long rangeLength = Long.min(chunkSize, contentLength);
             return new ResourceRegion(video, 0, rangeLength);
         }
     }
