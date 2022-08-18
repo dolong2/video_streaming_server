@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VideoResDto {
 
     @JsonProperty

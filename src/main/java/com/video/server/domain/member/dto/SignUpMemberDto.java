@@ -2,6 +2,7 @@ package com.video.server.domain.member.dto;
 
 import com.video.server.domain.member.Member;
 import com.video.server.domain.member.Role;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.Collections;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignUpMemberDto {
 
     private String email;

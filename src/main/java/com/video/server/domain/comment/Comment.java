@@ -3,10 +3,7 @@ package com.video.server.domain.comment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.video.server.domain.member.Member;
 import com.video.server.domain.video.Video;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -2,10 +2,7 @@ package com.video.server.domain.video;
 
 import com.video.server.domain.comment.Comment;
 import com.video.server.domain.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Video {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

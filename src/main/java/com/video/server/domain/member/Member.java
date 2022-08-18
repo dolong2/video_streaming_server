@@ -2,10 +2,7 @@ package com.video.server.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.video.server.domain.video.Video;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ import java.util.List;
 @Getter
 @Table(name = "member")
 @Builder
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class Member{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
