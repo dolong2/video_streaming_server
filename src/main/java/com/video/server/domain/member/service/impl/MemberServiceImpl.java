@@ -6,7 +6,6 @@ import com.video.server.domain.member.dto.SignInMemberDto;
 import com.video.server.domain.member.dto.SignUpMemberDto;
 import com.video.server.domain.member.service.MemberService;
 import com.video.server.global.config.security.jwt.TokenProvider;
-import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.DuplicateMemberException;
 import com.video.server.global.exception.error.MemberNotFindException;
 import com.video.server.global.exception.error.PasswordNotCorrectException;

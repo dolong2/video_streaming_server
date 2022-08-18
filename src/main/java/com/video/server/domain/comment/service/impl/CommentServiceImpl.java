@@ -7,7 +7,6 @@ import com.video.server.domain.comment.service.CommentService;
 import com.video.server.domain.member.Member;
 import com.video.server.domain.video.Video;
 import com.video.server.domain.video.repository.VideoRepository;
-import com.video.server.global.exception.ErrorCode;
 import com.video.server.global.exception.error.CommentNotFindException;
 import com.video.server.global.exception.error.FileNotFindException;
 import com.video.server.global.util.CurrentMemberUtil;
